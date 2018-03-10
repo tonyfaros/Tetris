@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     int blockPlaying = 0;
     View v1 = null;
     String blockColorPlaying = "block_blue";
+    int blockState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 logicMatrix[2][6] = 2;
                 blockOnCourse = true;
                 blockPlaying = 2;
+                blockState = 0;
                 blockColorPlaying = "block_blue";
 
                 break;
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 logicMatrix[3][6] = 3;
                 blockPlaying = 3;
                 blockColorPlaying = "block_yelow";
+                blockState = 1;
                 break;
             case 3:
                 //Stick 4
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 blockOnCourse = true;
                 blockPlaying = 4;
                 blockColorPlaying = "block_lightblue";
-
+                blockState = 1;
                 break;
             case 4:
                 //Lighting  5
@@ -185,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 blockOnCourse = true;
                 blockPlaying = 5;
                 blockColorPlaying = "block_green";
+                blockState = 1;
                 break;
             case 5:
                 //Tank 6
@@ -199,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 blockOnCourse = true;
                 blockPlaying = 6;
                 blockColorPlaying = "block_red";
-
+                blockState = 1;
                 break;
             case 6:
                 // HarryPotter Scar 7
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 blockOnCourse = true;
                 blockPlaying = 7;
                 blockColorPlaying = "block_pink";
+                blockState = 1;
                 break;
         }
     }
@@ -288,39 +293,130 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public boolean checkPosition(int a, int s,int d, int f, int g,int h, int j, int k){
+        if(logicMatrix[a][s] != -1 && logicMatrix[d][f] != -1 && logicMatrix[g][h] != -1 &&
+                logicMatrix[j][k] != -1){
+            return true;
+        }
+        return false;
+    }
+
     public void rotateBlock(View view){
+        int cont = 0;
+        int[] positions = new int[8];
+        for(int i = 0; i < 20; i++){
+            for(int j = 0;j<12;j++){
+                if(logicMatrix[i][j] == blockPlaying) {
+                    positions[cont] = i;
+                    cont++;
+                    positions[cont] = j;
+                    cont++;
+                }
+
+            }
+        }
         switch (blockPlaying){
             case 3:
-                rotateL();
+                rotateL(positions);
                 break;
             case 4:
-                rotateStick();
+                rotateStick(positions);
                 break;
             case 5:
-                rotateLightning();
+                rotateLightning(positions);
                 break;
             case 6:
-                rotateTank();
+                rotateTank(positions);
                 break;
             case 7:
-                rotateHP();
+                rotateHP(positions);
                 break;
         }
     }
 
-    public void rotateL(){
+    public void rotateL(int[] positions){
+        switch (blockPlaying){
+            case 1:
+                if(checkPosition(positions[0]+1,positions[1]+2, positions[2],positions[3]+1,positions[4],positions[5],positions[6],positions[7])){
+
+                }
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+        }
+    }
+    public void rotateTank(int[] positions){
+        switch (blockPlaying){
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+        }
 
     }
-    public void rotateTank(){
+    public void rotateStick(int[] positions){
+        switch (blockPlaying){
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+        }
 
     }
-    public void rotateStick(){
+    public void rotateLightning(int[] positions){
+        switch (blockPlaying){
+            case 1:
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+        }
 
     }
-    public void rotateLightning(){
+    public void rotateHP(int[] positions){
+        switch (blockPlaying){
+            case 1:
 
-    }
-    public void rotateHP(){
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+        }
 
     }
 
