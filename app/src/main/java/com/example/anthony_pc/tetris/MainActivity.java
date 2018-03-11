@@ -227,11 +227,11 @@ public class MainActivity extends AppCompatActivity {
     public int random(int i, int j){
         Random rand = new Random();
         int n = rand.nextInt(j-i+1)+i; // Gives n such that 0 <= n < 20
-        return n;
+        return 6;
     }
 
     public void downAllPiece(){
-        printLogicMatrix();
+       // printLogicMatrix();
         for(int k = 19;k>0;k--){
             for(int n = 11;n>0;n--){
                 if(logicMatrix[k][n] == blockPlaying){
@@ -294,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkPosition(int a, int s,int d, int f, int g,int h, int j, int k){
+        Log.e("asdf","ggggggggggggggggggggggg");
         if(logicMatrix[a][s] != -1 && logicMatrix[d][f] != -1 && logicMatrix[g][h] != -1 &&
                 logicMatrix[j][k] != -1){
             return true;
@@ -335,86 +336,410 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rotateL(int[] positions){
-        switch (blockPlaying){
+        switch (blockState){
             case 1:
                 if(checkPosition(positions[0]+1,positions[1]+2, positions[2],positions[3]+1,positions[4],positions[5],positions[6],positions[7])){
-
+                    logicMatrix[positions[0]+1] [positions[1]+2] = blockPlaying;
+                    logicMatrix[positions[2]] [positions[3]+1] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[0]+1) + "," + String.valueOf(positions[1]+2));
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]+1));
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+                    imageView5.setImageResource(0);
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+                    blockState = 2;
                 }
+
                 break;
             case 2:
+                if(checkPosition(positions[0]-1,positions[1], positions[2]-1,positions[3],positions[2]+1,positions[3],positions[6],positions[7])){
+                    logicMatrix[positions[0]-1] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[2]-1] [positions[3]] = blockPlaying;
+                    logicMatrix[positions[2]+1] [positions[3]] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]-1) + "," + String.valueOf(positions[1]));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]-1) + "," + String.valueOf(positions[3]));
+                    ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[2]+1) + "," + String.valueOf(positions[3]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 3;
+                }
 
                 break;
             case 3:
+                if(checkPosition(positions[0],positions[1]+2, positions[4],positions[5]-1,positions[4],positions[5]+1,positions[6],positions[7])){
+                    logicMatrix[positions[0]] [positions[1]+2] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]-1] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]+1] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[2]] [positions[3]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]));
+                    ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]+2));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]-1));
+                    ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]+1));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 4;
+                }
 
                 break;
             case 4:
+                if(checkPosition(positions[0],positions[1]-1, positions[4]+1,positions[5],positions[6]+1,positions[7],positions[6],positions[7])){
+                    logicMatrix[positions[0]] [positions[1]-1] = blockPlaying;
+                    logicMatrix[positions[4]+1] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[6]+1] [positions[7]] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[2]] [positions[3]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
 
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]));
+                    ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[4]+1) + "," + String.valueOf(positions[5]));
+                    ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[6]+1) + "," + String.valueOf(positions[7]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 1;
+                }
                 break;
         }
     }
     public void rotateTank(int[] positions){
-        switch (blockPlaying){
+        switch (blockState){
             case 1:
+                if(checkPosition(positions[0],positions[1], positions[2],positions[3],positions[4]+1,positions[5],positions[6],positions[7])){
+                    //logicMatrix[positions[0]] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[4]+1] [positions[5]] = blockPlaying;
+                    //logicMatrix[positions[6]] [positions[7]] = blockPlaying;
+                    //logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[2]] [positions[3]] = 1;
+                   // logicMatrix[positions[6]] [positions[7]] = 1;
 
+                   // ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]));
+                    //ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    //imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                   // imageView3.setImageResource(0);
+
+                   // ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[4]+1) + "," + String.valueOf(positions[5]));
+                    //ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[6]+1) + "," + String.valueOf(positions[7]));
+
+                   // imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                   // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 2;
+                }
                 break;
             case 2:
+                if(checkPosition(positions[0],positions[1], positions[2],positions[3]-1,positions[4],positions[5],positions[6],positions[7])){
+                    //logicMatrix[positions[0]] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[2]] [positions[3]-1] = blockPlaying;
+                    //logicMatrix[positions[6]] [positions[7]] = blockPlaying;
+                    //logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    // logicMatrix[positions[6]] [positions[7]] = 1;
 
+                    // ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    //ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    //imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
+
+                    // ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]-1));
+                    //ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[6]+1) + "," + String.valueOf(positions[7]));
+
+                    // imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 3;
+                }
                 break;
             case 3:
+                if(checkPosition(positions[0],positions[1], positions[2]-1,positions[3],positions[4],positions[5],positions[6],positions[7])){
+                    //logicMatrix[positions[0]] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[2]-1] [positions[3]] = blockPlaying;
+                    //logicMatrix[positions[6]] [positions[7]] = blockPlaying;
+                    //logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    // logicMatrix[positions[6]] [positions[7]] = 1;
 
+                    // ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    //ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    //imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
+
+                    // ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]-1) + "," + String.valueOf(positions[3]));
+                    //ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[6]+1) + "," + String.valueOf(positions[7]));
+
+                    // imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 4;
+                }
                 break;
             case 4:
+                if(checkPosition(positions[0],positions[1], positions[2],positions[3],positions[4],positions[5]+1,positions[6],positions[7])){
+                    //logicMatrix[positions[0]] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]+1] = blockPlaying;
+                    //logicMatrix[positions[6]] [positions[7]] = blockPlaying;
+                    //logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+                    // logicMatrix[positions[6]] [positions[7]] = 1;
 
+                    // ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+                    //ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    //imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
+
+                    // ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]+1));
+                    //ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[6]+1) + "," + String.valueOf(positions[7]));
+
+                    // imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 1;
+                }
                 break;
         }
 
     }
     public void rotateStick(int[] positions){
-        switch (blockPlaying){
+        switch (blockState){
             case 1:
+                if(checkPosition(positions[2],positions[3], positions[2],positions[3]-1,positions[2],positions[3]-1,positions[2],positions[3]+1)){
+                    logicMatrix[positions[2]] [positions[3]-2] = blockPlaying;
+                    logicMatrix[positions[2]] [positions[3]-1] = blockPlaying;
+                    logicMatrix[positions[2]] [positions[3]+1] = blockPlaying;
 
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]-2));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]-1));
+                    ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]+1));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 2;
+                }
                 break;
             case 2:
+                if(checkPosition(positions[4]+1,positions[5], positions[4]-1,positions[5],positions[4]+2,positions[5],positions[4],positions[5])){
+                    logicMatrix[positions[4]-1] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[4]+1] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[4]+2] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[2]] [positions[3]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
 
-                break;
-            case 3:
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]));
+                    ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
 
-                break;
-            case 4:
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    imageView3.setImageResource(0);
 
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[4]-1) + "," + String.valueOf(positions[5]));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[4]+1) + "," + String.valueOf(positions[5]));
+                    ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]+2) + "," + String.valueOf(positions[5]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 1;
+                }
                 break;
         }
 
     }
     public void rotateLightning(int[] positions){
-        switch (blockPlaying){
+        switch (blockState){
             case 1:
+                if(checkPosition(positions[0],positions[1]+1, positions[2],positions[3]-1,positions[0],positions[1]+1,positions[0],positions[1]+1)){
+                    logicMatrix[positions[0]] [positions[1]+1] = blockPlaying;
+                    logicMatrix[positions[2]] [positions[3]-1] = blockPlaying;
+                    //logicMatrix[positions[4]] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+                    //logicMatrix[positions[6]] [positions[7]] = 1;
+
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+                   // ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                   // imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]+1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]-1));
+                   // ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]+2) + "," + String.valueOf(positions[5]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                   // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 2;
+                }
                 break;
             case 2:
+                if(checkPosition(positions[0]-1,positions[1], positions[2]+1,positions[3],positions[0]-1,positions[1],positions[0]-1,positions[1])){
+                    logicMatrix[positions[0]-1] [positions[1]] = blockPlaying;
+                    logicMatrix[positions[2]+1] [positions[3]] = blockPlaying;
+                    //logicMatrix[positions[4]] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+                    //logicMatrix[positions[6]] [positions[7]] = 1;
 
-                break;
-            case 3:
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+                    // ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
 
-                break;
-            case 4:
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
 
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[0]-1) + "," + String.valueOf(positions[1]));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[2]+1) + "," + String.valueOf(positions[3]));
+                    // ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]+2) + "," + String.valueOf(positions[5]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 1;
+                }
                 break;
         }
 
     }
     public void rotateHP(int[] positions){
-        switch (blockPlaying){
+        switch (blockState){
             case 1:
+                if(checkPosition(positions[2],positions[3]-1, positions[6],positions[7]+1,positions[2],positions[3],positions[2],positions[3])){
+                    logicMatrix[positions[2]] [positions[3]-1] = blockPlaying;
+                    logicMatrix[positions[6]] [positions[7]+1] = blockPlaying;
+                    //logicMatrix[positions[4]] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[0]] [positions[1]] = 1;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    //logicMatrix[positions[6]] [positions[7]] = 1;
 
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[0]) + "," + String.valueOf(positions[1]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    // ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
+
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[2]) + "," + String.valueOf(positions[3]-1));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]+1));
+                    // ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]+2) + "," + String.valueOf(positions[5]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 2;
+                }
                 break;
             case 2:
+                if(checkPosition(positions[2]-1,positions[3], positions[0]+1,positions[2],positions[2],positions[3],positions[2],positions[3])){
+                    logicMatrix[positions[2]-1] [positions[3]] = blockPlaying;
+                    logicMatrix[positions[0]+1] [positions[1]] = blockPlaying;
+                    //logicMatrix[positions[4]] [positions[5]] = blockPlaying;
+                    logicMatrix[positions[4]] [positions[5]] = 1;
+                    logicMatrix[positions[6]] [positions[7]] = 1;
+                    //logicMatrix[positions[6]] [positions[7]] = 1;
 
-                break;
-            case 3:
+                    ImageView imageView = v1.findViewWithTag(String.valueOf(positions[4]) + "," + String.valueOf(positions[5]));
+                    ImageView imageView2 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
+                    // ImageView imageView3 = v1.findViewWithTag(String.valueOf(positions[6]) + "," + String.valueOf(positions[7]));
 
-                break;
-            case 4:
+                    imageView.setImageResource(0);
+                    imageView2.setImageResource(0);
+                    // imageView3.setImageResource(0);
 
+                    ImageView imageView4 = v1.findViewWithTag(String.valueOf(positions[2]-1) + "," + String.valueOf(positions[3]));
+                    ImageView imageView5 = v1.findViewWithTag(String.valueOf(positions[0]+1) + "," + String.valueOf(positions[1]));
+                    // ImageView imageView6 = v1.findViewWithTag(String.valueOf(positions[4]+2) + "," + String.valueOf(positions[5]));
+
+                    imageView4.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    imageView5.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+                    // imageView6.setImageResource(getResources().getIdentifier(blockColorPlaying, "drawable", getPackageName()));
+
+                    blockState = 1;
+                }
                 break;
         }
 
