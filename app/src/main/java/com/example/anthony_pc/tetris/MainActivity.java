@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     public int random(int i, int j){
         Random rand = new Random();
         int n = rand.nextInt(j-i+1)+i; // Gives n such that 0 <= n < 20
-        return 6;
+        return n;
     }
 
     public void downAllPiece(){
@@ -714,7 +714,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case 2:
-                if(checkPosition(positions[2]-1,positions[3], positions[0]+1,positions[2],positions[2],positions[3],positions[2],positions[3])){
+                if(checkPosition(positions[2]-1,positions[3], positions[0]+1,positions[1],positions[2],positions[3],positions[2],positions[3])){
                     logicMatrix[positions[2]-1] [positions[3]] = blockPlaying;
                     logicMatrix[positions[0]+1] [positions[1]] = blockPlaying;
                     //logicMatrix[positions[4]] [positions[5]] = blockPlaying;
@@ -743,6 +743,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    public void checkLine(){
+        int cont = 0;
+        for(int i = 19; i>0; i--) {
+            for (int j = 11; j > 0; j--) {
+                if(logicMatrix[i][j] == -1){
+                    cont++;
+                }
+                if(cont==10){
+
+                }
+            }
+        }
     }
 
     public void printLogicMatrix(){
